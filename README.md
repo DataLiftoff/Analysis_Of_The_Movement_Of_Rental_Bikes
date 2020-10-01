@@ -1,69 +1,73 @@
 # Analysis Of The Movement Of Rental Bikes
 
-Um Einsichten in den Fahrradverkehr von Städten zu bekommen, können die APIs von Bike Sharing Unternehmen heran gezogen werden. Neben Bewegungsmustern des alltäglichen Lebens kann auch das Straßennetz an sich analysiert werden.
+The APIs of bike sharing companies can be used to gain insights into bicycle traffic in cities. In addition to movement patterns in everyday life, the road network itself can also be analyzed.
 
-Dieses Repository zeigt wie aus den einzelnen GPS-Koordinaten der abgestellten Fahrräder eine Karte der gut entickelten Gebiete einer Stadt entsteht und wie Einblicke in die Verhaltensweisen der Bevölkerung gewonnen werden können. 
+This repository shows how a map of the well-developed areas of a city is created from the individual GPS coordinates of the parked bicycles and how insights into the behavior of the population can be gained.
 
 
-# 1. Wo kommen die Rohdaten her?
+# 1. Where does the raw data come from?
 
-Um Bike Sharing betreiben zu können, ist jedes abgestellte Fahrrad mit seinen GPS-Koordinaten von den jeweiligen Diensten erfasst. Diese aktuellen Daten werden dann per API weitergeleitet, sodass die Nutzer einsehen können wo die Fahrräder gerade geparkt sind. 
-Einen Überblick über die öffentlichen APIs bietet das Projekt [WoBike](https://github.com/ubahnverleih/WoBike).
+In order to be able to operate bike sharing, every parked bike is recorded by the respective services with its GPS coordinates. This current data is then forwarded via API so that users can see where the bikes are currently parked.
+The [WoBike](https://github.com/ubahnverleih/WoBike) project offers an overview of the public APIs
 
-Für eineinhalb Monate wurden für dieses Projekt die Standorte der [nextbike](https://www.nextbike.de/)-API aufgezeichnet. Die festgehaltenen Daten umfassen ausschließlich den Zeitpunkt, eine eindeutige ID für jedes Fahrrad und die GPS-Koordinaten der abgestellten Fahrräder. Für momentan gemietete Räder liegen keine Daten vor.
+The locations of the [nextbike](https://www.nextbike.de/) API were recorded for this project for a month and a half. The recorded data only includes the time, a unique ID for each bicycle and the GPS coordinates of the bicycles parked. No data is available for bikes currently rented.
 
 ![Raw_Data](/build/Raw_Data_Table.png)
 
 
-# 2. Wie werden die Daten aufbereitet?
+# 2. How is the data processed?
 
-Mit Hilfe des K-Means-Algorithmus werden die einzelnen GPS-Koordinaten der Fahrräder zu ca. 100 weltweiten Clustern zusammengefasst. Mittels reverse geocoding kann eine Stadt und eine Zeitzone den einzelnen Clustern zugeordnet werden. 
+With the help of the K-Means algorithm, the individual GPS coordinates of the bicycles are combined into approx. 100 global clusters. A city and a time zone can be assigned to the individual clusters using reverse geocoding.
 
-Weil zwei unterschiedliche, aufeinander folgende Standorte eines Fahrrades eine Fahrt zwischen den Positionen vorraussetzt, werden die Daten nach solchen Trips gefiltert. Mit den UNIX Zeitstempeln ist auch gleich die Fahrtdauer bekannt. 
-Für die weiteren Analysen werden Ausreißer in den Daten der Trips entfernt und auch nur Cluster innerhalb von Deutschland betrachtet. 
+Because two different, consecutive locations of a bicycle require a trip between the positions, the data is filtered for such trips. With the UNIX time stamps, the journey time is also known.
+For further analyzes, outliers in the trip data are removed and only clusters within Germany are considered.
 
 ![Trips_Per_City](/build/35/Trips_Per_City.png)
 
 
-# 3. Wie sieht das Fahrverhalten in Bremen aus?
+# 3. What is the driving behavior like in Bremen?
 
-Exemplarisch wird die Analyse der Daten an der Stadt Bremen betrachtet. Über den Zeitraum der Datenerhebung lässt sich ein wöchentliches Muster in der Anzahl der Trips und auch zwei Stoßzeiten pro Tag erkennen. 
+The analysis of the data for the city of Bremen is considered as an example. Over the period of data collection, a weekly pattern can be seen in the number of trips and two peak times per day.
 
 ![Trips_Per_Day](/build/35/Trips_Distribution_Bremen.png)
 
-Wird die Anzahl der Trips gruppiert nach Wochentag dargestellt, so lässt sich ein starker Zusammenhang zu den üblichen Arbeitszeiten feststellen. Selbst ein früherer Feierabend am Freitag kann belegt werden. 
+If the number of trips is grouped according to the day of the week, a strong correlation to the usual working hours can be determined. Even an earlier end of work on Friday can be booked.
 
 ![Trips_Per_Weekday](/build/35/Trips_Weekday_Bremen.png)
 
 
-# 4. Welche Stadtgebiete werden stark befahren?
+# 4. Which urban areas are heavily used?
 
-Um die Trips der Fahrradfahrer mit der tatsächlichen Infrastruktur zu verknüpfen, wird das Straßennetz von Open-Street-Map verwendet. So kann mit dem Start- und dem End-Punkt des Fahrrad-Trips der kürzeste Weg auf dem Straßennetz berechnet werden. Weil dies noch zu einer Verzerrung führen kann, wird eine Randomisierung in die Berechnung des wahrscheinlich genutzen Weges eingefügt. 
-Zwar kann mit diesem Ansatz kein einzelner Trip genau bestimmt werden, doch gemittelt über viele randomisierte Trips ergeben sich Muster für bevorzugte Straßen. 
+The road network of Open Street Map is used to link the trips of the cyclists with the actual infrastructure. In this way, the shortest route on the road network can be calculated using the start and end points of the bike trip.
+
+Because this can still lead to a distortion, a randomization is inserted into the calculation of the path that is likely to be used.
+Although no individual trip can be precisely determined with this approach, patterns for preferred roads are averaged over many randomized trips. 
 
 ![Heatmap_Location](/build/35/Heatmap_Location_Bremen.png)
 
 
-# 5. Wie schnell bewegen sich die Fahrräder im Stadtgebiet fort?
+# 5. How fast do the bicycles move around the city?
 
-Mit der Fahrtdauer und der von Open-Street-Map berechneten Fahrtsrecke, lässt sich die durschnitliche Geschwindigkeit des Radfahrers bestimmen. Auch dies führt erst im Mix mit vielen Trips zu einer aussagekräftigen Abbildung.
+The average speed of the cyclist can be determined with the duration of the trip and the route calculated on the Open Street Map. This, too, only leads to a meaningful illustration in a mix with many trips.
 
 ![Heatmap_Speed](/build/35/Heatmap_Speed_Bremen.png)
 
 
-# 6. Fazit
+# 6. Conclusion
 
-Allein aus den Standortdaten von Leihfahrrädern können Einblicke in die Arbeits- und Wochenends-Kultur der Bevölkerung gewonnen werden. 
+Insights into the work and weekend culture of the population can be gained from the location data of rental bicycles alone.
 
-Auch ist es möglich Rückschlüsse auf den Ausbau und die Effizienz der Stadtinfrastruktur zu ziehen.
-So lassen sich nicht nur Wohn- und Arbeits-Gebiete einer Stadt identifizieren, sondern auch viel genutzte Straßen und Gegenden in denen der Radverkehr effizient geregelt ist.
-Zu beachten ist dabei, dass die randomisierten Trips nur eine Annäherung an die Wirklichkeit darstellen können und mit mehr Daten noch an Aussagekraft gewinnen. 
+It is also possible to draw conclusions about the expansion and efficiency of the city infrastructure.
+In this way, not only residential and work areas of a city can be identified, but also much-used streets and areas in which bicycle traffic is efficiently regulated.
+
+It should be noted that the randomized trips of this project can only represent an approximation of reality and that it becomes even more meaningful with more data. 
 
 
-# 7. Ausblick
+# 7. Outlook
 
-Möglicherweise lassen sich Muster von einzelnen Individuen in den Daten aufspüren, wenn sie regelmäßige Routen zurücklegen.  
-Aufbauend auf der Analyse einer einzelnen Stadt, sollte der Vergleich von Städten untereinander Spannendes bereit halten. 
+It is possible that patterns of individuals can be traced in the data if they travel regular routes.
+
+Based on the analysis of a single city, the comparison of cities with each other should be exciting.
 
 
 
