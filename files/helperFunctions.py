@@ -124,7 +124,7 @@ def connectMongo(collection, host='docker-compose_mongo_1', port=27017):
 
 
 ## Connect To MySQL Database
-def connectMySQL(host='docker-compose_mysql_1', user='morris', password='password', database='bike_movement', buffered=False):
+def connectMySQL(host='docker-compose_mysql_1', user='user', password='password', database='bike_movement', buffered=False):
     '''
     Input:
     host - host server
