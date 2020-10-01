@@ -8,7 +8,7 @@ Dieses Repository zeigt wie aus den einzelnen GPS-Koordinaten der abgestellten F
 # 1. Wo kommen die Rohdaten her?
 
 Um Bike Sharing betreiben zu können, ist jedes abgestellte Fahrrad mit seinen GPS-Koordinaten von den jeweiligen Diensten erfasst. Diese aktuellen Daten werden dann per API weitergeleitet, sodass die Nutzer einsehen können wo die Fahrräder gerade geparkt sind. 
-Einen Überblick über die öffentlichen APIs bietet das Projekt [WoBike](https://api.nextbike.net/reservation/geojson/flexzone_all.json).
+Einen Überblick über die öffentlichen APIs bietet das Projekt [WoBike](https://github.com/ubahnverleih/WoBike).
 
 Für eineinhalb Monate wurden für dieses Projekt die Standorte der [nextbike](https://www.nextbike.de/)-API aufgezeichnet. Die festgehaltenen Daten umfassen ausschließlich den Zeitpunkt, eine eindeutige ID für jedes Fahrrad und die GPS-Koordinaten der abgestellten Fahrräder. Für momentan gemietete Räder liegen keine Daten vor.
 
@@ -54,8 +54,9 @@ Mit der Fahrtdauer und der von Open-Street-Map berechneten Fahrtsrecke, lässt s
 # 6. Fazit
 
 Allein aus den Standortdaten von Leihfahrrädern können Einblicke in die Arbeits- und Wochenends-Kultur der Bevölkerung gewonnen werden. 
-Auch ist es möglich Rückschlüsse auf den Ausbau und die Effizienz der Stadtinfrastruktur zu ziehen.
 
+Auch ist es möglich Rückschlüsse auf den Ausbau und die Effizienz der Stadtinfrastruktur zu ziehen.
+So lassen sich nicht nur Wohn- und Arbeits-Gebiete einer Stadt identifizieren, sondern auch viel genutzte Straßen und Gegenden in denen der Radverkehr effizient geregelt ist.
 Zu beachten ist dabei, dass die randomisierten Trips nur eine Annäherung an die Wirklichkeit darstellen können und mit mehr Daten noch an Aussagekraft gewinnen. 
 
 
