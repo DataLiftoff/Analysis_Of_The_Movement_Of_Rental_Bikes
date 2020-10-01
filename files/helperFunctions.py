@@ -1,22 +1,3 @@
-# To create nice plots
-#import seaborn as sns
-
-# To compute KDEs
-#import scipy.stats as st
-
-# To create plots
-#import matplotlib as mpl
-
-# To create nice plots
-#import matplotlib.cm as cm
-
-# To create nice plots
-#from matplotlib.colors import LinearSegmentedColormap
-
-
-
-
-
 ## Wait for container start up
 def containerWait(sleep=10):
     '''
