@@ -1,0 +1,42 @@
+# Specify Version Of docker-compose
+version: '3'
+
+# Define Containers To Start
+services:
+
+# Name 'mysql'
+  mysql:
+    # Build The Container From Folder
+    build: ../mysql
+    # Mount folder for database
+    volumes:
+      - ../data/data_mysql:/var/lib/mysql
+    ports:
+      - 3307:3306
+
+  # Name 'zeo'
+  zeo:
+    # Build The Container From Folder
+    build: ../python
+    # Mount folder with data-files
+    volumes:
+      - ../files:/files
+      - ../data/data_zeo:/graphs
+    command: bash files/ZEO.sh
+
+  # Name 'python'
+  python:
+    # Build The Container From Folder
+    build: ../python
+    # Mount folder with data-files
+    volumes:
+      - ../files:/files
+    # Link The Container To The Services
+    links:
+      - mysql
+      - zeo
+    # Wait For The Services To Start
+    depends_on:
+      - mysql
+      - zeo
+    command: python files/08_download_osm_graph.py
